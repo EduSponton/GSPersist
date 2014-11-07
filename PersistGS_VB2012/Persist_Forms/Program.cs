@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PersistGS_VB2012
+namespace Persist_Forms
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace PersistGS_VB2012
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmClientes());
+            Application.Run(new Form1());
         }
     }
 }
