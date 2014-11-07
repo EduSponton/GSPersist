@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace PersistGS_VB2012
 {
-    public partial class Form1 : Form
+    public partial class FrmClientes : FrmABMBase
     {
-        public Form1()
+        
+        public FrmClientes()
         {
             InitializeComponent();
+          
+        }
+
+        private void FrmClientes_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void nuevo(object sender, PersistEvent o) {
+            MessageBox.Show("Nuevo"+o.IdRegistroActual);
         }
     }
 }
