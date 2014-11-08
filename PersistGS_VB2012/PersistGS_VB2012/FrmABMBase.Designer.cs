@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.dgvRegistros = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -37,7 +38,6 @@
             this.btGuardar = new System.Windows.Forms.Button();
             this.btEditar = new System.Windows.Forms.Button();
             this.btNuevo = new System.Windows.Forms.Button();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -48,9 +48,9 @@
             this.pnCampos = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistros)).BeginInit();
             this.panel2.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.pnCampos.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -66,6 +66,21 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(305, 351);
             this.panel1.TabIndex = 17;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.textBox7, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.dgvRegistros, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(305, 351);
+            this.tableLayoutPanel3.TabIndex = 20;
             // 
             // textBox7
             // 
@@ -88,6 +103,7 @@
             this.dgvRegistros.Name = "dgvRegistros";
             this.dgvRegistros.Size = new System.Drawing.Size(299, 315);
             this.dgvRegistros.TabIndex = 18;
+            this.dgvRegistros.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistros_CellDoubleClick);
             // 
             // panel2
             // 
@@ -102,7 +118,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(304, 134);
             this.panel2.TabIndex = 17;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // label1
             // 
@@ -123,6 +138,7 @@
             this.btEliminar.TabIndex = 28;
             this.btEliminar.Text = "Eliminar";
             this.btEliminar.UseVisualStyleBackColor = true;
+            this.btEliminar.Click += new System.EventHandler(this.btEliminar_Click);
             // 
             // btGuardar
             // 
@@ -132,6 +148,7 @@
             this.btGuardar.TabIndex = 27;
             this.btGuardar.Text = "Guardar";
             this.btGuardar.UseVisualStyleBackColor = true;
+            this.btGuardar.Click += new System.EventHandler(this.btGuardar_Click);
             // 
             // btEditar
             // 
@@ -141,6 +158,7 @@
             this.btEditar.TabIndex = 26;
             this.btEditar.Text = "Editar";
             this.btEditar.UseVisualStyleBackColor = true;
+            this.btEditar.Click += new System.EventHandler(this.btEditar_Click);
             // 
             // btNuevo
             // 
@@ -150,21 +168,7 @@
             this.btNuevo.TabIndex = 25;
             this.btNuevo.Text = "Nuevo";
             this.btNuevo.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.textBox7, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.dgvRegistros, 0, 1);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(305, 351);
-            this.tableLayoutPanel3.TabIndex = 20;
+            this.btNuevo.Click += new System.EventHandler(this.btNuevo_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -180,7 +184,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(311, 497);
             this.tableLayoutPanel2.TabIndex = 19;
-            this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint_1);
             // 
             // textBox3
             // 
@@ -257,7 +260,6 @@
             this.pnCampos.Name = "pnCampos";
             this.pnCampos.Size = new System.Drawing.Size(717, 491);
             this.pnCampos.TabIndex = 10;
-            this.pnCampos.Paint += new System.Windows.Forms.PaintEventHandler(this.pnCampos_Paint);
             // 
             // tableLayoutPanel4
             // 
@@ -282,12 +284,12 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "FrmABMBase";
             this.Text = "Clientes";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.FrmABMBase_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRegistros)).EndInit();
-            this.panel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRegistros)).EndInit();
+            this.panel2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.pnCampos.ResumeLayout(false);
             this.pnCampos.PerformLayout();

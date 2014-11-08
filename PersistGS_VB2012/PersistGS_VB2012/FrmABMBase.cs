@@ -13,23 +13,23 @@ namespace PersistGS_VB2012
     public partial class FrmABMBase : Form
     {
 
-        public EventHandler<PersistEvent> onLoad;
+        public event EventHandler<PersistEvent> onLoad;
 
-        public EventHandler<PersistEvent> beforeNew;
-        public EventHandler<PersistEvent> beforeCancelNew;
-        public EventHandler<PersistEvent> beforeEdit;
-        public EventHandler<PersistEvent> beforeCancelEdit;
-        public EventHandler<PersistEvent> beforeSave;
-        public EventHandler<PersistEvent> beforeDelete;
-        public EventHandler<PersistEvent> beforeRecordChange;
+        public event EventHandler<PersistEvent> beforeNew;
+        public event EventHandler<PersistEvent> beforeCancelNew;
+        public event  EventHandler<PersistEvent> beforeEdit;
+        public event EventHandler<PersistEvent> beforeCancelEdit;
+        public event EventHandler<PersistEvent> beforeSave;
+        public event EventHandler<PersistEvent> beforeDelete;
+        public event EventHandler<PersistEvent> beforeRecordChange;
 
-        public EventHandler<PersistEvent> afterNew;
-        public EventHandler<PersistEvent> afterCancelNew;
-        public EventHandler<PersistEvent> afterEdit;
-        public EventHandler<PersistEvent> afterCancelEdit;
-        public EventHandler<PersistEvent> afterSave;
-        public EventHandler<PersistEvent> afterDelete;
-        public EventHandler<PersistEvent> afterRecordChange;
+        public event EventHandler<PersistEvent> afterNew;
+        public event EventHandler<PersistEvent> afterCancelNew;
+        public event EventHandler<PersistEvent> afterEdit;
+        public event EventHandler<PersistEvent> afterCancelEdit;
+        public event EventHandler<PersistEvent> afterSave;
+        public event EventHandler<PersistEvent> afterDelete;
+        public event EventHandler<PersistEvent> afterRecordChange;
 
              
         public FrmABMBase()
@@ -37,46 +37,138 @@ namespace PersistGS_VB2012
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btNuevo_Click(object sender, EventArgs e)
         {
-          
+            PersistEvent pe= new PersistEvent(0,0);
 
-
+            if (this.btNuevo.Text == "Nuevo")
+            {
+                if (this.beforeNew!=null)
+                {
+                    this.beforeNew(this, pe);
+                }
+                //Conectar con persistencia
+                if (this.afterNew != null)
+                {
+                    this.afterNew(this, pe);
+                }
+                this.btNuevo.Text = "Cancelar Nuevo";
+            }
+            else if (this.btNuevo.Text == "Cancelar Nuevo")
+            {
+                if (this.beforeCancelNew!=null)
+                {
+                    this.beforeCancelNew(this, pe);
+                }
+                //Conectar con persistencia
+                if (this.afterCancelNew != null)
+                {
+                    this.afterCancelNew(this, pe);
+                }
+                this.btNuevo.Text = "Nuevo";
+            }
         }
 
-        private void pnCampos_Paint(object sender, PaintEventArgs e)
+        private void btEditar_Click(object sender, EventArgs e)
         {
+            PersistEvent pe = new PersistEvent(0, 0);
 
+            if (this.btEditar.Text=="Editar"){
+                if (this.beforeEdit!=null)
+                {
+                    this.beforeEdit(this, pe);
+                }
+                //Conectar con persistencia
+                if (this.afterEdit != null)
+                {
+                    this.afterEdit(this, pe);
+                }
+                this.btEditar.Text = "Cancelar Edición";
+            }else if (this.btEditar.Text == "Cancelar Edición")
+            {
+                if (this.beforeCancelEdit != null)
+                {
+                    this.beforeCancelEdit(this, pe);
+                }
+                //Conectar con persistencia
+                if (this.afterCancelEdit != null)
+                {
+                    this.afterCancelEdit(this, pe);
+                }
+                this.btEditar.Text = "Editar";
+            }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void btEliminar_Click(object sender, EventArgs e)
         {
+            PersistEvent pe = new PersistEvent(0, 0);
 
+            if (this.beforeDelete != null)
+            {
+                this.beforeDelete(this, pe);
+            }
+            //Conectar con persistencia
+            if (this.afterDelete!= null)
+            {
+                this.afterDelete(this, pe);
+            }
         }
 
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        private void btGuardar_Click(object sender, EventArgs e)
         {
+            PersistEvent pe = new PersistEvent(0, 0);
 
+            
+
+            if (this.beforeSave != null)
+            {
+                this.beforeSave(this, pe);
+            }
+
+            
+            if (validateDataIntegrity()) {
+
+                //Conectar con persistencia
+                if (this.afterSave != null)
+                {
+                    this.afterSave(this, pe);
+                }
+            }
+            
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        private void dgvRegistros_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            Int64 id = 0;
+            PersistEvent pe; 
+            if (this.dgvRegistros.Rows[e.RowIndex].Cells[0].Value != null) {
+                id = Int64.Parse(this.dgvRegistros.Rows[e.RowIndex].Cells[0].Value.ToString());
+                pe= new PersistEvent(id,0);
+                if (this.beforeRecordChange != null)
+                {
+                    this.beforeRecordChange(this, pe);
+                }
+                //Conectar con persistencia
+                if (this.afterRecordChange!= null)
+                {
+                    this.afterRecordChange(this, pe);
+                }
+            }
         }
 
-        private void tableLayoutPanel2_Paint_1(object sender, PaintEventArgs e)
+        private void FrmABMBase_Load(object sender, EventArgs e)
         {
-
+            PersistEvent pe = new PersistEvent(0, 0);
+            if (this.onLoad != null)
+            {
+                this.onLoad(this, pe);
+            }
+            
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
+        public virtual Boolean validateDataIntegrity() {
+            return false;
         }
+        
     }
 }
