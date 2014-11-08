@@ -53,6 +53,10 @@ namespace PersistGS_VB2012
                     this.afterNew(this, pe);
                 }
                 this.btNuevo.Text = "Cancelar Nuevo";
+                this.btEditar.Enabled=false;
+                this.btEditar.Text="Editar";
+                this.btEliminar.Enabled = false;
+                this.btGuardar.Enabled=true;
             }
             else if (this.btNuevo.Text == "Cancelar Nuevo")
             {
@@ -66,6 +70,10 @@ namespace PersistGS_VB2012
                     this.afterCancelNew(this, pe);
                 }
                 this.btNuevo.Text = "Nuevo";
+                
+                this.btEditar.Enabled=false;
+                this.btEliminar.Enabled=false;
+                this.btGuardar.Enabled=false;
             }
         }
 
@@ -84,6 +92,9 @@ namespace PersistGS_VB2012
                     this.afterEdit(this, pe);
                 }
                 this.btEditar.Text = "Cancelar Edición";
+                this.btNuevo.Enabled=true;
+                this.btEliminar.Enabled=false;
+                this.btGuardar.Enabled=true;
             }else if (this.btEditar.Text == "Cancelar Edición")
             {
                 if (this.beforeCancelEdit != null)
@@ -96,6 +107,10 @@ namespace PersistGS_VB2012
                     this.afterCancelEdit(this, pe);
                 }
                 this.btEditar.Text = "Editar";
+                this.btNuevo.Enabled=true;
+                //this.btEditar;
+                this.btEliminar.Enabled=true;
+                this.btGuardar.Enabled=false;
             }
         }
 
@@ -112,6 +127,10 @@ namespace PersistGS_VB2012
             {
                 this.afterDelete(this, pe);
             }
+            this.btNuevo.Enabled=true;
+            this.btEditar.Enabled=false;
+            this.btEliminar.Enabled=false;
+            this.btGuardar.Enabled=false;
         }
 
         private void btGuardar_Click(object sender, EventArgs e)
@@ -127,10 +146,17 @@ namespace PersistGS_VB2012
 
             
             if (validateDataIntegrity()) {
-
+                this.btNuevo.Text = "Nuevo";
+                this.btNuevo.Enabled = true;
+                this.btEditar.Enabled = true;
+                this.btEditar.Text = "Editar";
+                this.btEliminar.Enabled = true;
+                this.btGuardar.Enabled = false;
                 //Conectar con persistencia
                 if (this.afterSave != null)
                 {
+                   
+
                     this.afterSave(this, pe);
                 }
             }
@@ -149,6 +175,13 @@ namespace PersistGS_VB2012
                     this.beforeRecordChange(this, pe);
                 }
                 //Conectar con persistencia
+                this.btNuevo.Text = "Nuevo";
+                this.btNuevo.Enabled=true;
+                this.btEditar.Text = "Editar";
+                this.btEditar.Enabled=true;
+                this.btEliminar.Enabled=true;
+                this.btGuardar.Enabled=false;
+
                 if (this.afterRecordChange!= null)
                 {
                     this.afterRecordChange(this, pe);
@@ -163,11 +196,10 @@ namespace PersistGS_VB2012
             {
                 this.onLoad(this, pe);
             }
-            
         }
 
         public virtual Boolean validateDataIntegrity() {
-            return false;
+            return true;
         }
         
     }

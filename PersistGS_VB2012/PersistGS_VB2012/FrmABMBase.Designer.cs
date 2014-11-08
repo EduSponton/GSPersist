@@ -89,8 +89,9 @@
             this.textBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox7.Location = new System.Drawing.Point(3, 3);
+            this.textBox7.Margin = new System.Windows.Forms.Padding(3, 3, 4, 3);
             this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(299, 26);
+            this.textBox7.Size = new System.Drawing.Size(298, 26);
             this.textBox7.TabIndex = 19;
             // 
             // dgvRegistros
@@ -100,8 +101,9 @@
             this.dgvRegistros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRegistros.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvRegistros.Location = new System.Drawing.Point(3, 33);
+            this.dgvRegistros.Margin = new System.Windows.Forms.Padding(3, 3, 4, 3);
             this.dgvRegistros.Name = "dgvRegistros";
-            this.dgvRegistros.Size = new System.Drawing.Size(299, 315);
+            this.dgvRegistros.Size = new System.Drawing.Size(298, 315);
             this.dgvRegistros.TabIndex = 18;
             this.dgvRegistros.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistros_CellDoubleClick);
             // 
