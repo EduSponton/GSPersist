@@ -12,7 +12,7 @@ namespace PersistGS_VB2012
 {
     public partial class FrmABMBase : Form
     {
-
+        PersistEvent localPE;
         public event EventHandler<PersistEvent> onLoad;
 
         public event EventHandler<PersistEvent> beforeNew;
@@ -35,11 +35,55 @@ namespace PersistGS_VB2012
         public FrmABMBase()
         {
             InitializeComponent();
+            localPE = new PersistEvent(0, 0);
+            PersistEvent pe = new PersistEvent(0, 0);
+            if (this.onLoad != null)
+            {
+                this.onLoad(this, pe);
+            }
+            //Conectar con persistencia
+            this.btNuevo.Text = "Nuevo";
+            this.btNuevo.Enabled = true;
+            this.btEditar.Text = "Editar";
+            this.btEditar.Enabled = false;
+            this.btEliminar.Enabled = false;
+            this.btGuardar.Enabled = false;
+            
+        }
+
+        public FrmABMBase(Int64 id)
+        {
+            InitializeComponent();
+            localPE = new PersistEvent(id, 0);
+            PersistEvent pe = new PersistEvent(id, 0);
+            if (this.onLoad != null)
+            {
+                this.onLoad(this, pe);
+            }
+            
+            if (this.beforeRecordChange != null)
+            {
+                this.beforeRecordChange(this, pe);
+            }
+            //Conectar con persistencia
+            this.btNuevo.Text = "Nuevo";
+            this.btNuevo.Enabled = true;
+            this.btEditar.Text = "Editar";
+            this.btEditar.Enabled = true;
+            this.btEliminar.Enabled = true;
+            this.btGuardar.Enabled = false;
+
+            if (this.afterRecordChange != null)
+            {
+                this.afterRecordChange(this, pe);
+            }
         }
 
         private void btNuevo_Click(object sender, EventArgs e)
         {
-            PersistEvent pe= new PersistEvent(0,0);
+            this.localPE.IdRegistroAnterior = this.localPE.IdRegistroActual;
+            this.localPE.IdRegistroActual = 0;
+            PersistEvent pe=new PersistEvent(this.localPE.IdRegistroActual,this.localPE.IdRegistroAnterior);
 
             if (this.btNuevo.Text == "Nuevo")
             {
@@ -79,7 +123,11 @@ namespace PersistGS_VB2012
 
         private void btEditar_Click(object sender, EventArgs e)
         {
-            PersistEvent pe = new PersistEvent(0, 0);
+           // this.localPE.IdRegistroAnterior = this.localPE.IdRegistroActual;
+           // this.localPE.IdRegistroActual = 0;
+            PersistEvent pe = new PersistEvent(this.localPE.IdRegistroActual, this.localPE.IdRegistroAnterior);
+
+
 
             if (this.btEditar.Text=="Editar"){
                 if (this.beforeEdit!=null)
@@ -116,7 +164,9 @@ namespace PersistGS_VB2012
 
         private void btEliminar_Click(object sender, EventArgs e)
         {
-            PersistEvent pe = new PersistEvent(0, 0);
+            //this.localPE.IdRegistroAnterior = this.localPE.IdRegistroActual;
+          //  this.localPE.IdRegistroActual = 0;
+            PersistEvent pe = new PersistEvent(this.localPE.IdRegistroActual, this.localPE.IdRegistroAnterior);
 
             if (this.beforeDelete != null)
             {
@@ -135,12 +185,14 @@ namespace PersistGS_VB2012
 
         private void btGuardar_Click(object sender, EventArgs e)
         {
-            PersistEvent pe = new PersistEvent(0, 0);
-
+           // this.localPE.IdRegistroAnterior = this.localPE.IdRegistroActual;
+           // this.localPE.IdRegistroActual = 0;
+           
             
 
             if (this.beforeSave != null)
             {
+                PersistEvent pe = new PersistEvent(this.localPE.IdRegistroActual, this.localPE.IdRegistroAnterior);
                 this.beforeSave(this, pe);
             }
 
@@ -153,10 +205,13 @@ namespace PersistGS_VB2012
                 this.btEliminar.Enabled = true;
                 this.btGuardar.Enabled = false;
                 //Conectar con persistencia
+
+                this.localPE.IdRegistroAnterior = this.localPE.IdRegistroActual;
+                this.localPE.IdRegistroActual = 0;//Cambiar luego por valor que devuelve el objeto entidad
+                 
                 if (this.afterSave != null)
                 {
-                   
-
+                    PersistEvent pe = new PersistEvent(this.localPE.IdRegistroActual, this.localPE.IdRegistroAnterior);   
                     this.afterSave(this, pe);
                 }
             }
@@ -169,7 +224,11 @@ namespace PersistGS_VB2012
             PersistEvent pe; 
             if (this.dgvRegistros.Rows[e.RowIndex].Cells[0].Value != null) {
                 id = Int64.Parse(this.dgvRegistros.Rows[e.RowIndex].Cells[0].Value.ToString());
-                pe= new PersistEvent(id,0);
+
+                this.localPE.IdRegistroAnterior = this.localPE.IdRegistroActual;
+                this.localPE.IdRegistroActual = id;
+
+                pe = new PersistEvent(this.localPE.IdRegistroActual, this.localPE.IdRegistroAnterior);
                 if (this.beforeRecordChange != null)
                 {
                     this.beforeRecordChange(this, pe);
@@ -191,15 +250,12 @@ namespace PersistGS_VB2012
 
         private void FrmABMBase_Load(object sender, EventArgs e)
         {
-            PersistEvent pe = new PersistEvent(0, 0);
-            if (this.onLoad != null)
-            {
-                this.onLoad(this, pe);
-            }
+            
+            
         }
 
         public virtual Boolean validateDataIntegrity() {
-            return true;
+            return false;
         }
         
     }
