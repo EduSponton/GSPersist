@@ -164,6 +164,8 @@
             // 
             // btNuevo
             // 
+            this.btNuevo.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.btNuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btNuevo.Location = new System.Drawing.Point(7, 27);
             this.btNuevo.Name = "btNuevo";
             this.btNuevo.Size = new System.Drawing.Size(118, 45);

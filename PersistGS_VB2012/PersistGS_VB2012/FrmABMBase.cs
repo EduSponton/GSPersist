@@ -84,7 +84,7 @@ namespace PersistGS_VB2012
             this.localPE.IdRegistroAnterior = this.localPE.IdRegistroActual;
             this.localPE.IdRegistroActual = 0;
             PersistEvent pe=new PersistEvent(this.localPE.IdRegistroActual,this.localPE.IdRegistroAnterior);
-           // btNuevo.BackColor = Color.Red;
+           
             if (this.btNuevo.Text == "Nuevo")
             {
                 if (this.beforeNew!=null)
